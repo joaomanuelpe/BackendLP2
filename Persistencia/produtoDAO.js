@@ -38,7 +38,7 @@ export default class ProdutoDAO {
             const conexao = await conectar();
             // Garantir que a data de validade esteja no formato correto YYYY-MM-DD
             const sql = `INSERT INTO produto(prod_descricao,prod_precoCusto,prod_precoVenda,prod_qtdEstoque,prod_urlImagem,prod_dataValidade, fk_codigo_cat)
-                values(?,?,?,?,?,STR_TO_DATE(?, '%Y-%m-%d),?)
+                values(?,?,?,?,?,str_to_date(?,'%Y-%m-%d),?)
             `;
             let parametros = [
                 produto.descricao,
@@ -59,7 +59,7 @@ export default class ProdutoDAO {
         if (produto instanceof Produto) {
             const conexao = await conectar();
             // Garantir que a data de validade esteja no formato correto YYYY-MM-DD
-            const sql = `UPDATE produto SET prod_descricao=?,prod_precoCusto=?,prod_precoVenda=?,prod_qtdEstoque=?,prod_urlImagem=?,prod_dataValidade=?, fk_codigo_cat=?
+            const sql = `UPDATE produto SET prod_descricao=?,prod_precoCusto=?,prod_precoVenda=?,prod_qtdEstoque=?,prod_urlImagem=?,prod_dataValidade=str_to_date(?,'%Y-%m-%d), fk_codigo_cat=?
                 WHERE prod_codigo = ?
             `;
             let parametros = [
