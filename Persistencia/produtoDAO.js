@@ -9,8 +9,7 @@ export default class ProdutoDAO {
     }
 
     async init() {
-        try 
-        {
+        try {
             const conexao = await conectar(); //retorna uma conexão
             const sql = `
             CREATE TABLE IF NOT EXISTS produto(
@@ -37,8 +36,9 @@ export default class ProdutoDAO {
     async incluir(produto) {
         if (produto instanceof Produto) {
             const conexao = await conectar();
-            const sql = `INSERT INTO produto(prod_descricao,prod_precoCusto,prod_precoVenda,prod_qtdEstoque,prod_urlImagem,prod_dataValidade, fk_codigo_cat)
-                values(?,?,?,?,?,str_to_date(?,'%d/%m/%Y'),?)
+            // Garantir que a data de validade esteja no formato correto YYYY-MM-DD
+            const sql = `INSERT INTO produto(prod_descricao,prod_precoCusto,prod_precoVenda,prod_qtdEstoque,prod_urlImagem,str_to_date(?,prod_dataValidade, fk_codigo_cat)
+                values(?,?,?,?,?,?,?)
             `;
             let parametros = [
                 produto.descricao,
@@ -46,7 +46,7 @@ export default class ProdutoDAO {
                 produto.precoVenda,
                 produto.qtdEstoque,
                 produto.urlImagem,
-                produto.dataValidade,
+                produto.dataValidade,  // A data já vem no formato YYYY-MM-DD
                 produto.categoria.codigo
             ]; //dados do produto
             const resultado = await conexao.execute(sql, parametros);
@@ -54,10 +54,12 @@ export default class ProdutoDAO {
             await conexao.release(); //libera a conexão
         }
     }
+    
     async alterar(produto) {
         if (produto instanceof Produto) {
             const conexao = await conectar();
-            const sql = `UPDATE produto SET prod_descricao=?,prod_precoCusto=?,prod_precoVenda=?,prod_qtdEstoque=?,prod_urlImagem=?,prod_dataValidade=str_to_date(?,'%d/%m/%Y'), fk_codigo_cat = ?
+            // Garantir que a data de validade esteja no formato correto YYYY-MM-DD
+            const sql = `UPDATE produto SET prod_descricao=?,prod_precoCusto=?,prod_precoVenda=?,prod_qtdEstoque=?,prod_urlImagem=?,prod_dataValidade=?, fk_codigo_cat=?
                 WHERE prod_codigo = ?
             `;
             let parametros = [
@@ -66,7 +68,7 @@ export default class ProdutoDAO {
                 produto.precoVenda,
                 produto.qtdEstoque,
                 produto.urlImagem,
-                produto.dataValidade,
+                produto.dataValidade,  // A data já vem no formato YYYY-MM-DD
                 produto.categoria.codigo,
                 produto.codigo
             ]; //dados do produto
@@ -74,6 +76,9 @@ export default class ProdutoDAO {
             await conexao.release(); //libera a conexão
         }
     }
+    
+
+
     async consultar(termo) {
         //resuperar as linhas da tabela produto e transformá-las de volta em produtos
         const conexao = await conectar();
@@ -94,7 +99,7 @@ export default class ProdutoDAO {
         const [linhas, campos] = await conexao.execute(sql, parametros);
         let listaProdutos = [];
         for (const linha of linhas) {
-            const categoria = new Categoria(linha['codigo'],linha["descricao"]);    
+            const categoria = new Categoria(linha['codigo'], linha["descricao"]);
             const produto = new Produto(
                 linha['prod_codigo'],
                 linha['prod_descricao'],
@@ -113,7 +118,7 @@ export default class ProdutoDAO {
     async excluir(produto) {
         if (produto instanceof Produto) {
             const conexao = await conectar();
-            const sql = `DELETE FROM produto WHERE codigo = ?`;
+            const sql = `DELETE FROM produto WHERE prod_codigo = ?`;
             let parametros = [
                 produto.codigo
             ]; //dados do produto
