@@ -37,8 +37,8 @@ export default class ProdutoDAO {
         if (produto instanceof Produto) {
             const conexao = await conectar();
             // Garantir que a data de validade esteja no formato correto YYYY-MM-DD
-            const sql = `INSERT INTO produto(prod_descricao,prod_precoCusto,prod_precoVenda,prod_qtdEstoque,prod_urlImagem,str_to_date(?,prod_dataValidade, fk_codigo_cat)
-                values(?,?,?,?,?,?,?)
+            const sql = `INSERT INTO produto(prod_descricao,prod_precoCusto,prod_precoVenda,prod_qtdEstoque,prod_urlImagem,prod_dataValidade, fk_codigo_cat)
+                values(?,?,?,?,?,STR_TO_DATE(?, '%Y-%m-%d),?)
             `;
             let parametros = [
                 produto.descricao,
