@@ -5,14 +5,14 @@ import { Router } from "express"; //micro-aplicação HTTP
 import FornecedorCtrl from "../Controle/fornecedorCtrl.js"
 
 const fornCtrl = new FornecedorCtrl();
-const rotaForn = Router();
+const rotaFornecedor = Router();
 
-rotaForn.post("/", fornCtrl.gravar);
-rotaForn.put("/:nome", fornCtrl.editar);
-rotaForn.patch("/:nome", fornCtrl.editar);
-rotaForn.delete("/:nome", fornCtrl.excluir);
-rotaForn.get("/:nome", fornCtrl.consultar);
-rotaForn.get("/",fornCtrl.consultar);
+rotaFornecedor.post("/", fornCtrl.gravar);
+rotaFornecedor.put("/:nome", fornCtrl.editar);
+rotaFornecedor.patch("/:nome", fornCtrl.editar);
+rotaFornecedor.delete("/:nome", fornCtrl.excluir);
+rotaFornecedor.get("/:nome", fornCtrl.consultar);
+rotaFornecedor.get("/",fornCtrl.consultar);
 
 export default rotaFornecedor;
 

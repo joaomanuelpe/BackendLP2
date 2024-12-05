@@ -1,5 +1,5 @@
 import conectar from './Conexao.js';
-import Fornecedor from '../modelos/Fornecedor.js';
+import Fornecedor from "../Modelo/fornecedor.js"
 
 export default class FornecedorDAO {
     async init() {
