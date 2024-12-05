@@ -6,10 +6,14 @@
 //vamos utilizar o padrão modular para importar os módulos
 //não esqueça de atualizar o arquivo package.json adicionando a chave "type":"module"
 import express from 'express';
-import rotaProduto from './Rotas/rotaProdutos.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import rotaProduto from './Rotas/rotaProdutos.js';
 import rotaCategoria from './Rotas/rotaCategoria.js';
+import rotaFornecedor from './Rotas/rotaFornecedor.js';
+import rotaUsuario from './Rotas/rotaUsuario.js';
+import rotaCliente from './Rotas/rotaCliente.js';
+import rotaEntregador from './Rotas/rotaEntregador.js';
 
 //carregar as variáveis de ambiente a partir
 //do arquivo .env localizado na raiz do projeto
@@ -34,6 +38,10 @@ app.use(express.static('./publico'));
 
 app.use("/produtos",rotaProduto);
 app.use("/categorias",rotaCategoria);
+app.use("/fornecedores",rotaFornecedor);
+app.use("/usuarios",rotaUsuario);
+app.use("/clientes",rotaCliente);
+app.use("/entregadores",rotaEntregador);
 //app.use('/clientes',rotaCliente);
 //app.use('/fornecedores', rotaFornecedor);
 //app.use('/usuarios', rotaUsuario);
