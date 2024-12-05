@@ -19,7 +19,7 @@ export default class ClienteDAO {
                 rua VARCHAR(100) NOT NULL,
                 cidade VARCHAR(50) NOT NULL,
                 estado VARCHAR(50) NOT NULL,
-                CONSTRAINT pk_cliente PRIMARY KEY(nome)
+                CONSTRAINT pk_cliente PRIMARY KEY(cpf)
             );
         `;
             await conexao.execute(sql);
@@ -51,15 +51,15 @@ export default class ClienteDAO {
     async alterar(cliente) {
         if (cliente instanceof Cliente) {
             const conexao = await conectar();
-            const sql = `UPDATE cliente SET cpf=?, telefone=?, bairro=?, rua=?, cidade=?, estado=? WHERE nome = ?`;
+            const sql = `UPDATE cliente SET nome=?, telefone=?, bairro=?, rua=?, cidade=?, estado=? WHERE cpf = ?`;
             let parametros = [
-                cliente.cpf,
+                cliente.nome,
                 cliente.telefone,
                 cliente.bairro,
                 cliente.rua,
                 cliente.cidade,
                 cliente.estado,
-                cliente.nome
+                cliente.cpf
             ]; // Dados do cliente
             await conexao.execute(sql, parametros);
             await conexao.release(); // Libera a conexão
@@ -76,7 +76,7 @@ export default class ClienteDAO {
             parametros = ['%' + termo + '%'];
         } else {
             sql = `SELECT * FROM cliente
-                   WHERE nome = ?`;
+                   WHERE cpf = ?`;
             parametros = [termo];
         }
         const [linhas] = await conexao.execute(sql, parametros);
@@ -100,8 +100,8 @@ export default class ClienteDAO {
     async excluir(cliente) {
         if (cliente instanceof Cliente) {
             const conexao = await conectar();
-            const sql = `DELETE FROM cliente WHERE nome = ?`;
-            let parametros = [cliente.nome]; // Dados do cliente
+            const sql = `DELETE FROM cliente WHERE cpf = ?`;
+            let parametros = [cliente.cpf]; // Dados do cliente
             await conexao.execute(sql, parametros);
             await conexao.release(); // Libera a conexão
         }

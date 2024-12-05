@@ -18,6 +18,7 @@ export default class EntregadorDAO {
                 modeloVeiculo VARCHAR(50) NOT NULL,
                 placaVeiculo VARCHAR(20) NOT NULL,
                 capacidadeCarga DECIMAL(10, 2) NOT NULL
+                CONSTRAINT PK_entregador PRIMARY KEY(id)
             );
         `;
             await conexao.execute(sql);

@@ -1,23 +1,14 @@
 import Cliente from "../Modelo/cliente.js";
 
 export default class ClienteCtrl {
-
     gravar(requisicao, resposta) {
-        // Preparar o destinatário que a resposta estará no formato JSON
         resposta.type("application/json");
 
         if (requisicao.method == 'POST' && requisicao.is("application/json")) {
-            const nome = requisicao.body.nome;
-            const cpf = requisicao.body.cpf;
-            const telefone = requisicao.body.telefone;
-            const bairro = requisicao.body.bairro;
-            const rua = requisicao.body.rua;
-            const cidade = requisicao.body.cidade;
-            const estado = requisicao.body.estado;
+            const { nome, cpf, telefone, bairro, rua, cidade, estado } = requisicao.body;
 
             // Validação dos dados
             if (nome && cpf && telefone && bairro && rua && cidade && estado) {
-                // Gravar o cliente
                 const cliente = new Cliente(nome, cpf, telefone, bairro, rua, cidade, estado);
                 cliente.incluir()
                     .then(() => {
@@ -50,16 +41,11 @@ export default class ClienteCtrl {
         resposta.type("application/json");
 
         if ((requisicao.method == 'PUT' || requisicao.method == 'PATCH') && requisicao.is("application/json")) {
-            const nome = requisicao.params.nome;
-            const cpf = requisicao.body.cpf;
-            const telefone = requisicao.body.telefone;
-            const bairro = requisicao.body.bairro;
-            const rua = requisicao.body.rua;
-            const cidade = requisicao.body.cidade;
-            const estado = requisicao.body.estado;
+            const { nome, telefone, bairro, rua, cidade, estado } = requisicao.body;
+            const cpf = requisicao.params.cpf;
 
             // Validação
-            if (nome && cpf && telefone && bairro && rua && cidade && estado) {
+            if (cpf && nome && telefone && bairro && rua && cidade && estado) {
                 const cliente = new Cliente(nome, cpf, telefone, bairro, rua, cidade, estado);
                 cliente.alterar()
                     .then(() => {
@@ -92,10 +78,10 @@ export default class ClienteCtrl {
         resposta.type("application/json");
 
         if (requisicao.method == 'DELETE') {
-            const nome = requisicao.params.nome;
+            const cpf = requisicao.params.cpf;
 
-            if (nome) {
-                const cliente = new Cliente(nome);
+            if (cpf) {
+                const cliente = new Cliente(null, cpf);
                 cliente.excluir()
                     .then(() => {
                         resposta.status(200).json({
@@ -112,7 +98,7 @@ export default class ClienteCtrl {
             } else {
                 resposta.status(400).json({
                     "status": false,
-                    "mensagem": "Informe um nome válido de um cliente conforme documentação da API."
+                    "mensagem": "Informe um CPF válido de um cliente conforme documentação da API."
                 });
             }
 
@@ -128,12 +114,9 @@ export default class ClienteCtrl {
         resposta.type("application/json");
 
         if (requisicao.method == "GET") {
-            let nome = requisicao.params.nome;
-            if (isNaN(nome)) {
-                nome = "";
-            }
+            const termo = requisicao.params.cpf || requisicao.params.nome || "";
             const cliente = new Cliente();
-            cliente.consultar(nome)
+            cliente.consultar(termo)
                 .then((listaClientes) => {
                     resposta.status(200).json(listaClientes);
                 })
