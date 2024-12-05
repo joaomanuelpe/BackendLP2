@@ -1,21 +1,25 @@
 import conectar from './Conexao.js';
-import Fornecedor from "../Modelo/fornecedor.js"
+import Fornecedor from "../Modelo/fornecedor.js";
 
 export default class FornecedorDAO {
+    constructor() {
+        this.init();
+    }
+
     async init() {
         try {
             const conexao = await conectar();
             const sql = `
             CREATE TABLE IF NOT EXISTS fornecedor (
-                nome VARCHAR(200) NOT NULL,
                 cnpj VARCHAR(18) NOT NULL,
+                nome VARCHAR(200) NOT NULL,
                 telefone VARCHAR(20) NOT NULL,
                 bairro VARCHAR(50) NOT NULL,
                 rua VARCHAR(50) NOT NULL,
                 cidade VARCHAR(50) NOT NULL,
                 estado VARCHAR(2) NOT NULL,
                 cep VARCHAR(9) NOT NULL,
-                CONSTRAINT pk_fornecedor PRIMARY KEY (nome)
+                CONSTRAINT pk_fornecedor PRIMARY KEY (cnpj)
             );
             `;
             await conexao.execute(sql);
@@ -30,14 +34,14 @@ export default class FornecedorDAO {
             const conexao = await conectar();
             const sql = `
                 INSERT INTO fornecedor (
-                    nome, cnpj, telefone, 
+                    cnpj, nome, telefone, 
                     bairro, rua, cidade, estado, cep
                 )
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             `;
             const parametros = [
-                fornecedor.nome,
                 fornecedor.cnpj,
+                fornecedor.nome,
                 fornecedor.telefone,
                 fornecedor.bairro,
                 fornecedor.rua,
@@ -56,24 +60,24 @@ export default class FornecedorDAO {
             const sql = `
                 UPDATE fornecedor 
                 SET 
-                    cnpj = ?, 
+                    nome = ?, 
                     telefone = ?, 
                     bairro = ?, 
                     rua = ?, 
                     cidade = ?, 
                     estado = ?, 
                     cep = ?
-                WHERE nome = ?
+                WHERE cnpj = ?
             `;
             const parametros = [
-                fornecedor.cnpj,
+                fornecedor.nome,
                 fornecedor.telefone,
                 fornecedor.bairro,
                 fornecedor.rua,
                 fornecedor.cidade,
                 fornecedor.estado,
                 fornecedor.cep,
-                fornecedor.nome
+                fornecedor.cnpj
             ];
             await conexao.execute(sql, parametros);
             await conexao.release();
@@ -119,9 +123,9 @@ export default class FornecedorDAO {
             const conexao = await conectar();
             const sql = `
                 DELETE FROM fornecedor 
-                WHERE nome = ?
+                WHERE cnpj = ?
             `;
-            const parametros = [fornecedor.nome];
+            const parametros = [fornecedor.cnpj];
             await conexao.execute(sql, parametros);
             await conexao.release();
         }

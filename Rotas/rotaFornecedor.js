@@ -8,10 +8,10 @@ const fornCtrl = new FornecedorCtrl();
 const rotaFornecedor = Router();
 
 rotaFornecedor.post("/", fornCtrl.gravar);
-rotaFornecedor.put("/:nome", fornCtrl.editar);
-rotaFornecedor.patch("/:nome", fornCtrl.editar);
-rotaFornecedor.delete("/:nome", fornCtrl.excluir);
-rotaFornecedor.get("/:nome", fornCtrl.consultar);
+rotaFornecedor.put("/:cnpj", fornCtrl.editar);
+rotaFornecedor.patch("/:cnpj", fornCtrl.editar);
+rotaFornecedor.delete("/:cnpj", fornCtrl.excluir);
+rotaFornecedor.get("/:cnpj", fornCtrl.consultar);
 rotaFornecedor.get("/",fornCtrl.consultar);
 
 export default rotaFornecedor;
