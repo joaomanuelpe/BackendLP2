@@ -54,10 +54,12 @@ export default class Usuario {
     }
 
     set tipo(novoTipo) {
-        this.#tipo = novoTipo;
+        if (novoTipo instanceof Tipo) {
+            this.#tipo = novoTipo;
+        }
     }
 
-    constructor(codigo = 0, nome = "", senha = "", email = "", dataNascimento = "", tipo = "") {
+    constructor(codigo = 0, nome = "", senha = "", email = "", dataNascimento = "", tipo = {}) {
         this.#codigo = codigo;
         this.#nome = nome;
         this.#senha = senha;

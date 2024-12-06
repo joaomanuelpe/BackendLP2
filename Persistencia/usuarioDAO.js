@@ -1,5 +1,6 @@
 import Usuario from "../Modelo/usuario.js";
 import conectar from "./Conexao.js";
+import Tipo from "../Modelo/tipo.js";
 
 export default class UsuarioDAO {
     constructor() {
@@ -16,8 +17,9 @@ export default class UsuarioDAO {
                 email VARCHAR(100) NOT NULL,
                 senha VARCHAR(30) NOT NULL,
                 dataNascimento DATE NOT NULL,
-                tipo VARCHAR(50) NOT NULL,
-                CONSTRAINT pk_usuario PRIMARY KEY(codigo)
+                fk_codigo_tipo NOT NULL,
+                CONSTRAINT pk_usuario PRIMARY KEY(codigo),
+                CONSTRAINT fk_tipo FOREIGN KEY(fk_codigo_tipo) REFERENCES tipo(codigo)
             );
             `;
             await conexao.execute(sql);
@@ -30,14 +32,14 @@ export default class UsuarioDAO {
     async incluir(usuario) {
         if (usuario instanceof Usuario) {
             const conexao = await conectar();
-            const sql = `INSERT INTO usuario(nome, email, senha, dataNascimento, tipo)
+            const sql = `INSERT INTO usuario(nome, email, senha, dataNascimento, fk_codigo_tipo)
                 values(?,?,?,?,?)`;
             let parametros = [
                 usuario.nome,
                 usuario.email,
                 usuario.senha,
                 usuario.dataNascimento,
-                usuario.tipo
+                usuario.tipo.codigo
             ];
             const resultado = await conexao.execute(sql, parametros);
             usuario.codigo = resultado[0].insertId;
@@ -54,7 +56,7 @@ export default class UsuarioDAO {
                 usuario.email,
                 usuario.senha,
                 usuario.dataNascimento,
-                usuario.tipo,
+                usuario.tipo.codigo,
                 usuario.codigo
             ];
             await conexao.execute(sql, parametros);
@@ -67,22 +69,27 @@ export default class UsuarioDAO {
         let sql = "";
         let parametros = [];
         if (isNaN(parseInt(termo))) {
-            sql = `SELECT * FROM usuario WHERE nome LIKE ?`;
+            sql = `SELECT * FROM usuario u
+                   INNER JOIN tipo t ON u.fk_codigo_tipo = t.codigo
+                   WHERE nome LIKE ?`;
             parametros = ['%' + termo + '%'];
         } else {
-            sql = `SELECT * FROM usuario WHERE codigo = ?`
+            sql = `SELECT * FROM usuario u
+                   INNER JOIN tipo t ON u.fk_codigo_tipo = t.codigo
+                   WHERE codigo = ?`
             parametros = [termo];
         }
         const [linhas, campos] = await conexao.execute(sql, parametros);
         let listaUsuarios = [];
         for (const linha of linhas) {
+            const tipo = new Tipo(linha['fk_codigo_tipo'], linha['tipo_tipo'], linha['tipo_adm']);
             const usuario = new Usuario(
                 linha['codigo'],
                 linha['nome'],
                 linha['senha'],
                 linha['email'],
                 linha['dataNascimento'],
-                linha['tipo']
+                tipo
             );
             listaUsuarios.push(usuario);
         }
