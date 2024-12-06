@@ -14,6 +14,7 @@ import rotaFornecedor from './Rotas/rotaFornecedor.js';
 import rotaUsuario from './Rotas/rotaUsuario.js';
 import rotaCliente from './Rotas/rotaCliente.js';
 import rotaEntregador from './Rotas/rotaEntregador.js';
+import rotaTipo from './Rotas/rotaTipo.js';
 
 //carregar as variáveis de ambiente a partir
 //do arquivo .env localizado na raiz do projeto
@@ -42,6 +43,7 @@ app.use("/fornecedores",rotaFornecedor);
 app.use("/usuarios",rotaUsuario);
 app.use("/clientes",rotaCliente);
 app.use("/entregadores",rotaEntregador);
+app.use("/tipos",rotaTipo);
 //app.use('/clientes',rotaCliente);
 //app.use('/fornecedores', rotaFornecedor);
 //app.use('/usuarios', rotaUsuario);

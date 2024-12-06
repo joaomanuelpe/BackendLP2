@@ -1,6 +1,7 @@
 //DAO - Data Access Object
 import Produto from "../Modelo/produto.js";
 import Categoria from "../Modelo/categoria.js";
+import Fornecedor from "../Modelo/fornecedor.js";
 
 import conectar from "./Conexao.js";
 export default class ProdutoDAO {
@@ -21,7 +22,7 @@ export default class ProdutoDAO {
                 prod_urlImagem VARCHAR(250),
                 prod_dataValidade DATE NOT NULL,
                 fk_codigo_cat INT NOT NULL,
-                fk_cnpj_forn INT NOT NULL,
+                fk_cnpj_forn VARCHAR(18) NOT NULL,
                 CONSTRAINT pk_produto PRIMARY KEY(prod_codigo),
                 CONSTRAINT fk_categoria FOREIGN KEY(fk_codigo_cat) REFERENCES categoria(codigo),
                 CONSTRAINT fk_fornecedor FOREIGN KEY(fk_cnpj_forn) REFERENCES fornecedor(cnpj) 
