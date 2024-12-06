@@ -112,7 +112,8 @@ export default class EntregadorCtrl {
         resposta.type("application/json");
 
         if (requisicao.method === "GET") {
-            const id = requisicao.params.id;
+            // const id = requisicao.params.id;
+            const id = "";
             const entregador = new Entregador();
 
             entregador.consultar(id)
