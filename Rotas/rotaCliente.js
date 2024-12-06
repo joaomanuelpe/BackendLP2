@@ -8,10 +8,10 @@ const clienteCtrl = new ClienteCtrl();
 const rotaCliente = Router();
 
 rotaCliente.post("/", clienteCtrl.gravar);
-rotaCliente.put("/:nome", clienteCtrl.editar);
-rotaCliente.patch("/:nome", clienteCtrl.editar);
-rotaCliente.delete("/:nome", clienteCtrl.excluir);
-rotaCliente.get("/:nome", clienteCtrl.consultar);
+rotaCliente.put("/:cpf", clienteCtrl.editar);
+rotaCliente.patch("/:cpf", clienteCtrl.editar);
+rotaCliente.delete("/:cpf", clienteCtrl.excluir);
+rotaCliente.get("/:cpf", clienteCtrl.consultar);
 rotaCliente.get("/",clienteCtrl.consultar);
 
 export default rotaCliente;
