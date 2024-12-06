@@ -9,7 +9,7 @@ export default class EntregadorCtrl {
             const { nome, cnh, veiculo, placa, capacidadeMax } = requisicao.body;
 
             if (nome && cnh && veiculo && placa && capacidadeMax) {
-                const entregador = new Entregador(nome, cnh, veiculo, placa, capacidadeMax);
+                const entregador = new Entregador(0, nome, cnh, veiculo, placa, capacidadeMax);
                 entregador.incluir()
                     .then(() => {
                         resposta.status(200).json({
@@ -80,8 +80,8 @@ export default class EntregadorCtrl {
             const id = requisicao.params.id;
 
             if (id) {
-                const entregador = new Entregador();
-                entregador.excluir(id)
+                const entregador = new Entregador(id);
+                entregador.excluir()
                     .then(() => {
                         resposta.status(200).json({
                             status: true,
