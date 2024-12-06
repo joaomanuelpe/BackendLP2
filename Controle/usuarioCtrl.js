@@ -1,4 +1,4 @@
-import Tipo from "../Modelo/tipo.js";
+import Tipo from "../Modelo/TipoModelo.js";
 import Usuario from "../Modelo/usuario.js";
 
 export default class UsuarioCtrl {

@@ -1,6 +1,6 @@
 import Usuario from "../Modelo/usuario.js";
 import conectar from "./Conexao.js";
-import Tipo from "../Modelo/tipo.js";
+import Tipo from "../Modelo/TipoModelo.js";
 
 export default class UsuarioDAO {
     constructor() {
