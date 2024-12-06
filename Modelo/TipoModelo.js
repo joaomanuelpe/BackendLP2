@@ -1,4 +1,4 @@
-import TipoDAO from "../Persistencia/tipoDAO.js"
+import TipoDAO from "../Persistencia/TipoPersDAO.js"
 
 export default class Tipo {
     #codigo;
