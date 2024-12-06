@@ -82,7 +82,7 @@ export default class EntregadorDAO {
                 linha['id'],
                 linha['nome'],
                 linha['cnh'],
-                linha['veiculo'],
+                linha['modeloVeiculo'],
                 linha['placa'],
                 linha['capacidadeMax']
             );
