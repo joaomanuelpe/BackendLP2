@@ -1,5 +1,5 @@
 //É a classe responsável por traduzir requisições HTTP e produzir respostas HTTP
-import Tipo from "../Modelo/Tipo.js";
+import Tipo from "../Modelo/tipo.js";
 
 export default class TipoCtrl {
 
