@@ -45,7 +45,7 @@ export default class EntregadorCtrl {
             const { nome, cnh, veiculo, placa, capacidadeMax } = requisicao.body;
 
             if (id && nome && cnh && veiculo && placa && capacidadeMax) {
-                const entregador = new Entregador(nome, cnh, veiculo, placa, capacidadeMax);
+                const entregador = new Entregador(id, nome, cnh, veiculo, placa, capacidadeMax);
                 entregador.alterar(id)
                     .then(() => {
                         resposta.status(200).json({
