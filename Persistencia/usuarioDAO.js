@@ -1,6 +1,6 @@
 import Usuario from "../Modelo/usuario.js";
 import conectar from "./Conexao.js";
-import Tipo from "../Modelo/tipo.js";
+import Tipo from "../Modelo/Tipo.js";
 
 export default class UsuarioDAO {
     constructor() {
@@ -17,9 +17,9 @@ export default class UsuarioDAO {
                 email VARCHAR(100) NOT NULL,
                 senha VARCHAR(30) NOT NULL,
                 dataNascimento DATE NOT NULL,
-                fk_codigo_tipo NOT NULL,
+                fk_codigo_tipo INT NOT NULL,
                 CONSTRAINT pk_usuario PRIMARY KEY(codigo),
-                CONSTRAINT fk_tipo FOREIGN KEY(fk_codigo_tipo) REFERENCES tipo(codigo)
+                CONSTRAINT fk_tipo FOREIGN KEY(fk_codigo_tipo) REFERENCES tipo(tipo_codigo)
             );
             `;
             await conexao.execute(sql);
@@ -70,12 +70,12 @@ export default class UsuarioDAO {
         let parametros = [];
         if (isNaN(parseInt(termo))) {
             sql = `SELECT * FROM usuario u
-                   INNER JOIN tipo t ON u.fk_codigo_tipo = t.codigo
+                   INNER JOIN tipo t ON u.fk_codigo_tipo = t.tipo_codigo
                    WHERE nome LIKE ?`;
             parametros = ['%' + termo + '%'];
         } else {
             sql = `SELECT * FROM usuario u
-                   INNER JOIN tipo t ON u.fk_codigo_tipo = t.codigo
+                   INNER JOIN tipo t ON u.fk_codigo_tipo = t.tipo_codigo
                    WHERE codigo = ?`
             parametros = [termo];
         }
