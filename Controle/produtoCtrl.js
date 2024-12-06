@@ -1,6 +1,7 @@
 //É a classe responsável por traduzir requisições HTTP e produzir respostas HTTP
 import Produto from "../Modelo/produto.js";
 import Categoria from "../Modelo/categoria.js";
+import Fornecedor from "../Modelo/fornecedor.js";
 
 export default class ProdutoCtrl {
 
@@ -16,18 +17,20 @@ export default class ProdutoCtrl {
             const urlImagem = requisicao.body.urlImagem;
             const dataValidade = requisicao.body.dataValidade;
             const categoria = requisicao.body.categoria;
+            const fornecedor = requisicao.body.fornecedor;
             const categ = new Categoria(categoria.codigo);
+            const forn = new Fornecedor(forn.cnpj);
             categ.consultar(categoria.codigo).then((listaCategorias) => {
                 if (listaCategorias.length > 0) {
                     //pseudo validação
                     if (descricao && precoCusto > 0 &&
                         precoVenda > 0 && qtdEstoque >= 0 &&
-                        urlImagem && dataValidade && categoria.codigo > 0) {
+                        urlImagem && dataValidade && categoria.codigo > 0 && fornecedor.cnpj) {
                         //gravar o produto
 
                         const produto = new Produto(0,
                             descricao, precoCusto, precoVenda,
-                            qtdEstoque, urlImagem, dataValidade, categ);
+                            qtdEstoque, urlImagem, dataValidade, categ, forn);
 
                         produto.incluir()
                             .then(() => {
@@ -90,18 +93,21 @@ export default class ProdutoCtrl {
             const urlImagem = requisicao.body.urlImagem;
             const dataValidade = requisicao.body.dataValidade;
             const categoria = requisicao.body.categoria;
+            const fornecedor = requisicao.body.fornecedor;
             //validação de regra de negócio
             const categ = new Categoria(categoria.codigo);
+            const forn = new Fornecedor(forn.cnpj);
+
             categ.consultar(categoria.codigo).then((lista) => {
                 if (lista.length > 0) {
                     //pseudo validação
                     if (codigo > 0 && descricao && precoCusto > 0 &&
                         precoVenda > 0 && qtdEstoque >= 0 &&
-                        urlImagem && dataValidade && categoria.codigo > 0) {
+                        urlImagem && dataValidade && categoria.codigo > 0 && fornecedor.cnpj) {
                         //alterar o produto
                         const produto = new Produto(codigo,
                             descricao, precoCusto, precoVenda,
-                            qtdEstoque, urlImagem, dataValidade, categ);
+                            qtdEstoque, urlImagem, dataValidade, categ, forn);
                         produto.alterar()
                             .then(() => {
                                 resposta.status(200).json({
