@@ -43,7 +43,7 @@ export default class TipoDAO {
       const conexao = await conectar();
       // Garantir que a data de validade esteja no formato correto YYYY-MM-DD
       const sql = `UPDATE tipo SET tipo_tipo=?, tipo_adm=?
-                WHERE prod_codigo = ?
+                WHERE tipo_codigo = ?
             `;
       let parametros = [tipo.tipo, tipo.adm]; //dados do tipo
       await conexao.execute(sql, parametros);
