@@ -45,7 +45,7 @@ export default class TipoDAO {
       const sql = `UPDATE tipo SET tipo_tipo=?, tipo_adm=?
                 WHERE tipo_codigo = ?
             `;
-      let parametros = [tipo.tipo, tipo.adm]; //dados do tipo
+      let parametros = [tipo.tipo, tipo.adm, tipo.codigo]; //dados do tipo
       await conexao.execute(sql, parametros);
       await conexao.release(); //libera a conexão
     }
