@@ -52,7 +52,8 @@ export default class TipoDAO {
             `;
             let parametros = [
                 tipo.tipo,
-                tipo.adm
+                tipo.adm,
+                tipo.codigo
             ]; //dados do tipo
             await conexao.execute(sql, parametros);
             await conexao.release(); //libera a conexão
