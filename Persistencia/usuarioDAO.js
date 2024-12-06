@@ -1,6 +1,6 @@
 import Usuario from "../Modelo/usuario.js";
 import conectar from "./Conexao.js";
-import Tipo from "../Modelo/Tipo.js";
+import Tipo from "../Modelo/tipo.js";
 
 export default class UsuarioDAO {
     constructor() {
@@ -50,7 +50,7 @@ export default class UsuarioDAO {
     async alterar(usuario) {
         if (usuario instanceof Usuario) {
             const conexao = await conectar();
-            const sql = `UPDATE usuario SET nome=?, email=?, senha=?, dataNascimento=?, tipo=? WHERE codigo = ?`;
+            const sql = `UPDATE usuario SET nome=?, email=?, senha=?, dataNascimento=?, fk_codigo_tipo=? WHERE codigo = ?`;
             let parametros = [
                 usuario.nome,
                 usuario.email,

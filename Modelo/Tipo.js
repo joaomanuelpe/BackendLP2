@@ -1,4 +1,4 @@
-import TipoDAO from "../Persistencia/TipoDAO.js";
+import TipoDAO from "../Persistencia/tipoDAO.js"
 
 export default class Tipo {
     #codigo;
@@ -43,7 +43,7 @@ export default class Tipo {
     async incluir(){
         //instanciar a camada de persistencia do Tipo
         const tipoDAO = new TipoDAO();
-        await tipoDAO.incluir(this); //this referÃªncia a si mesmo
+        await tipoDAO.incluir(this); //this referência a si mesmo
     }
 
     async consultar(termo){
