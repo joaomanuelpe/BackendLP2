@@ -22,7 +22,7 @@ export default class Entregador {
         this.#nome = nome;
         this.#cnh = cnh;
         this.#veiculo = veiculo;
-        this.#placa = placaVeiculo;
+        this.#placa = placa;
         this.#capacidadeMax = capacidadeMax;
     }
 
