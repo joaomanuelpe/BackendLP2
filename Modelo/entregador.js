@@ -5,25 +5,25 @@ export default class Entregador {
     #id;
     #nome;
     #cnh;
-    #modeloVeiculo;
-    #placaVeiculo;
-    #capacidadeCarga;
+    #veiculo;
+    #placa;
+    #capacidadeMax;
 
     // Construtor
     constructor(
         id = 0,
         nome = "",
         cnh = "",
-        modeloVeiculo = "",
-        placaVeiculo = "",
-        capacidadeCarga = 0,
+        veiculo = "",
+        placa = "",
+        capacidadeMax = 0,
     ) {
         this.#id = id;
         this.#nome = nome;
         this.#cnh = cnh;
-        this.#modeloVeiculo = modeloVeiculo;
-        this.#placaVeiculo = placaVeiculo;
-        this.#capacidadeCarga = capacidadeCarga;
+        this.#veiculo = veiculo;
+        this.#placa = placaVeiculo;
+        this.#capacidadeMax = capacidadeMax;
     }
 
     // Getters e Setters
@@ -51,28 +51,28 @@ export default class Entregador {
         this.#cnh = novaCnh;
     }
 
-    get modeloVeiculo() {
-        return this.#modeloVeiculo;
+    get veiculo() {
+        return this.#veiculo;
     }
 
-    set modeloVeiculo(novoModelo) {
-        this.#modeloVeiculo = novoModelo;
+    set veiculo(novoModelo) {
+        this.#veiculo = novoModelo;
     }
 
-    get placaVeiculo() {
-        return this.#placaVeiculo;
+    get placa() {
+        return this.#placa;
     }
 
-    set placaVeiculo(novaPlaca) {
-        this.#placaVeiculo = novaPlaca;
+    set placa(novaPlaca) {
+        this.#placa = novaPlaca;
     }
 
-    get capacidadeCarga() {
-        return this.#capacidadeCarga;
+    get capacidadeMax() {
+        return this.#capacidadeMax;
     }
 
-    set capacidadeCarga(novaCapacidade) {
-        this.#capacidadeCarga = novaCapacidade;
+    set capacidadeMax(novaCapacidade) {
+        this.#capacidadeMax = novaCapacidade;
     }
 
     
@@ -81,9 +81,9 @@ export default class Entregador {
             id: this.#id,
             nome: this.#nome,
             cnh: this.#cnh,
-            modeloVeiculo: this.#modeloVeiculo,
-            placaVeiculo: this.#placaVeiculo,
-            capacidadeCarga: this.#capacidadeCarga,
+            veiculo: this.#veiculo,
+            placa: this.#placa,
+            capacidadeMax: this.#capacidadeMax,
         };
     }
 

@@ -15,9 +15,9 @@ export default class EntregadorDAO {
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 nome VARCHAR(100) NOT NULL,
                 cnh VARCHAR(20) NOT NULL,
-                modeloVeiculo VARCHAR(50) NOT NULL,
-                placaVeiculo VARCHAR(20) NOT NULL,
-                capacidadeCarga DECIMAL(10, 2) NOT NULL
+                veiculo VARCHAR(50) NOT NULL,
+                placa VARCHAR(20) NOT NULL,
+                capacidadeMax DECIMAL(10, 2) NOT NULL
                 CONSTRAINT PK_entregador PRIMARY KEY(id)
             );
         `;
@@ -31,14 +31,14 @@ export default class EntregadorDAO {
     async incluir(entregador) {
         if (entregador instanceof Entregador) {
             const conexao = await conectar();
-            const sql = `INSERT INTO entregador(nome, cnh, modeloVeiculo, placaVeiculo, capacidadeCarga)
+            const sql = `INSERT INTO entregador(nome, cnh, veiculo, placa, capacidadeMax)
                 values(?,?,?,?,?)`;
             let parametros = [
                 entregador.nome,
                 entregador.cnh,
-                entregador.modeloVeiculo,
-                entregador.placaVeiculo,
-                entregador.capacidadeCarga,
+                entregador.veiculo,
+                entregador.placa,
+                entregador.capacidadeMax,
             ]; // Dados do entregador
             await conexao.execute(sql, parametros);
             await conexao.release(); // Libera a conexão
@@ -48,13 +48,13 @@ export default class EntregadorDAO {
     async alterar(entregador) {
         if (entregador instanceof Entregador) {
             const conexao = await conectar();
-            const sql = `UPDATE entregador SET nome=?, cnh=?, modeloVeiculo=?, placaVeiculo=?, capacidadeCarga=? WHERE id = ?`;
+            const sql = `UPDATE entregador SET nome=?, cnh=?, veiculo=?, placa=?, capacidadeMax=? WHERE id = ?`;
             let parametros = [
                 entregador.nome,
                 entregador.cnh,
-                entregador.modeloVeiculo,
-                entregador.placaVeiculo,
-                entregador.capacidadeCarga,
+                entregador.veiculo,
+                entregador.placa,
+                entregador.capacidadeMax,
                 entregador.id
             ]; // Dados do entregador
             await conexao.execute(sql, parametros);
@@ -82,9 +82,9 @@ export default class EntregadorDAO {
                 linha['id'],
                 linha['nome'],
                 linha['cnh'],
-                linha['modeloVeiculo'],
-                linha['placaVeiculo'],
-                linha['capacidadeCarga']
+                linha['veiculo'],
+                linha['placa'],
+                linha['capacidadeMax']
             );
             listaEntregadores.push(entregador);
         }
