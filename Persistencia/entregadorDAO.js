@@ -17,7 +17,7 @@ export default class EntregadorDAO {
                 cnh VARCHAR(20) NOT NULL,
                 veiculo VARCHAR(50) NOT NULL,
                 placa VARCHAR(20) NOT NULL,
-                capacidadeMax DECIMAL(10, 2) NOT NULL
+                capacidadeMax DECIMAL(10, 2) NOT NULL,
                 CONSTRAINT PK_entregador PRIMARY KEY(id)
             );
         `;
